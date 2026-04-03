@@ -17,6 +17,7 @@ const AuthRouter = require("./Routes/Router");
 const xssMiddleware = require("./middleware/xss");
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 app.set('trust proxy', 1); 
 
@@ -72,4 +73,6 @@ app.use("/api", apiRoutes);
 
 app.use(errorHandler);
 
-module.exports = app;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is booting up on port ${PORT}`);
+});
