@@ -1,5 +1,5 @@
 const UserModel = require("../Models/user-schema");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");

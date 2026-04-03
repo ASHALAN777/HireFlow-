@@ -1,7 +1,7 @@
 const UserModel = require("../Models/user-schema");
 const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const logger = require("../middleware/logger");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
