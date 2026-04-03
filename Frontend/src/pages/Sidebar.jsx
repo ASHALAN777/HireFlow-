@@ -25,7 +25,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div className="px-6 py-4 border-b border-gray-100">
-       <link rel="icon" type="image/svg+xml" href="/Group 38(1).svg" />
+       <link rel="icon" type="image/svg+xml" href="/hireflow_logo_updated.svg" />
       </div>
 
       {/* Menu Items */}
