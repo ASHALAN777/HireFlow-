@@ -68,6 +68,10 @@ app.use(xssMiddleware);
 
 // //  THEN routes
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
 app.use("/api/auth", AuthRouter);
 app.use("/api", apiRoutes);
 
