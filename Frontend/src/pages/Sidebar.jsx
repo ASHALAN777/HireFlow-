@@ -25,7 +25,7 @@ export default function Sidebar() {
 
       {/* Logo */}
       <div className="px-6 py-4 border-b border-gray-100">
-        <p className="text-sm font-medium text-gray-900">HireFlow</p>
+       <link rel="icon" type="image/svg+xml" href="/Group 38(1).svg" />
       </div>
 
       {/* Menu Items */}

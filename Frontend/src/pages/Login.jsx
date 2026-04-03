@@ -1,48 +1,53 @@
-import { useState, useContext } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import API from "@/api/api"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { AuthContext } from "@/components/Global/AuthProvider"
+import { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import API from "@/api/api";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/components/Global/AuthProvider";
+
+import { Player } from "@lottiefiles/react-lottie-player"
 
 export default function Login() {
-  const navigate = useNavigate()
-  const { Login } = useContext(AuthContext)
-  const [form, setForm] = useState({ email: "", password: "" })
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const { Login } = useContext(AuthContext);
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
+    e.preventDefault();
+    setLoading(true);
+    setError("");
     try {
-      const res = await API.post("/api/auth/login", form)
-      Login(res.data) // ← updates AuthContext with user data
+      const res = await API.post("/api/auth/login", form);
+      Login(res.data); // ← updates AuthContext with user data
       if (res.data.role === "Admin") {
-        navigate("/admin/dashboard")
+        navigate("/admin/dashboard");
       } else {
-        navigate("/candidate/dashboard")
+        navigate("/candidate/dashboard");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed")
+      setError(err.response?.data?.message || "Login failed");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="flex w-full max-w-3xl bg-white border border-gray-200 rounded-xl overflow-hidden">
-
         {/* Left — Form */}
         <div className="flex-1 p-10 flex flex-col justify-center">
-          <h1 className="text-xl font-medium text-gray-900 mb-1">Welcome back</h1>
-          <p className="text-xs text-gray-400 mb-6">Sign in to your HireFlow account</p>
+          <h1 className="text-xl font-medium text-gray-900 mb-1">
+            Welcome back
+          </h1>
+          <p className="text-xs text-gray-400 mb-6">
+            Sign in to your HireFlow account
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
@@ -58,7 +63,9 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 block mb-1">Password</label>
+              <label className="text-xs text-gray-400 block mb-1">
+                Password
+              </label>
               <Input
                 type="password"
                 name="password"
@@ -87,20 +94,25 @@ export default function Login() {
 
             <p className="text-xs text-gray-400 text-center">
               Don't have an account?{" "}
-              <Link to="/register" className="text-blue-500">Register</Link>
+              <Link to="/register" className="text-blue-500">
+                Register
+              </Link>
             </p>
           </form>
         </div>
 
         {/* Right — Lottie */}
         <div className="flex-1 bg-gray-50 border-l border-gray-100 flex flex-col items-center justify-center gap-2">
-          <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400 text-xs">Lottie</span>
-          </div>
-          <p className="text-xs text-gray-300">HireFlow</p>
+        
+          <Player
+            autoplay
+            loop
+            src="src/assets/Login.json"
+            style={{ height: "200px", width: "200px" }}
+          />
+        
         </div>
-
       </div>
     </div>
-  )
+  );
 }

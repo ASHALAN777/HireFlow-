@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import API from "@/api/api";
+import { Player } from "@lottiefiles/react-lottie-player"
 import { AuthContext } from "@/components/Global/AuthProvider";
 
 export default function Apply() {
@@ -104,9 +105,12 @@ export default function Apply() {
         <Navbar />
         <div className="min-h-[80vh] flex items-center justify-center">
           <div className="text-center">
-            <div className="w-32 h-32 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <p className="text-xs text-gray-300">Lottie</p>
-            </div>
+             <Player
+            autoplay
+            loop
+            src="src/assets/CheckboxAnimation.json"
+            style={{ height: "200px", width: "200px" }}
+          />
             <p className="text-lg font-medium text-gray-900 mb-2">Application submitted!</p>
             <p className="text-xs text-gray-400 mb-6">
               Redirecting to dashboard in <span className="font-medium text-gray-700">{countdown}s</span>
