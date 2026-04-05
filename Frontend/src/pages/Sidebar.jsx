@@ -27,7 +27,7 @@ export default function Sidebar() {
         <img
           src="/hireflow_logo_updated.svg"
           alt="Logo"
-          className="h-7 w-auto" // Fixed logo height
+          className="h-5 w-auto" // Fixed logo height
         />
       </div>
 
