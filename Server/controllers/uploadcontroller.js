@@ -19,7 +19,7 @@ const uploadResume = async (req, res) => {
     const result = await cloudinary.uploader.upload(fileBase64, {
       folder: "hireflow_resumes",
       public_id: customFileName,
-      resource_type: "auto",
+      resource_type: "raw",
     });
 
     res.status(200).json({
