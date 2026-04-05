@@ -35,8 +35,9 @@ const {
 // Jobs
 router.get("/jobs/public", getPublicJobs); // public, no auth
 router.get("/jobs/:id", getJobById); // public, no auth
-router.get("/jobs", authMiddleware, isAdmin, getAllJobs); // admin,  auth
 router.post("/jobs", authMiddleware, isAdmin, createJobValidation, createJob);
+router.get("/jobs", authMiddleware, isAdmin, getAllJobs); // admin,  auth
+
 router.put(
   "/jobs/:id",
   authMiddleware,
