@@ -23,11 +23,11 @@ export default function Sidebar() {
   return (
     <div className="fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-20">
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-gray-100">
+      <div class="px-3 py-3 border-b flex justify-center border-gray-100">
         <img
           src="/Hireflow_logo.svg"
           alt="Logo"
-          className="h-5 w-auto" // Fixed logo height
+          className="h-7 w-auto" // Fixed logo height
         />
       </div>
 
