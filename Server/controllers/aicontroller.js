@@ -1,5 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const pdf = require("pdf-parse-fork");
+const pdf = require("pdf-parse");
 const logger = require("../middleware/logger");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
