@@ -60,167 +60,123 @@ export default function ResumeAdvisor() {
   }
 
   return (
+
     <DashboardLayout title="AI Resume Advisor">
+      <div className="max-h-[calc(100vh-100px)] overflow-y-auto pr-2">
+        <p className="text-xl font-medium text-gray-900 mb-1">AI Resume Advisor</p>
+        <p className="text-[10px] text-gray-400 mb-6">Upload resume and paste description for AI feedback</p>
 
-      <p className="text-2xl font-medium text-gray-900 mb-2">AI Resume Advisor</p>
-      <p className="text-xs text-gray-400 mb-8">Upload your resume and paste the job description to get an AI-powered score and feedback</p>
+        {!result ? (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
 
-      {!result ? (
-        <div className="space-y-6">
+              {/* Resume Upload */}
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-[10px] font-medium text-gray-400 mb-2 uppercase tracking-wider">Your Resume</p>
+                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition">
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    className="hidden"
+                    onChange={(e) => {
+                      setResumeFile(e.target.files[0])
+                      setError("")
+                    }}
+                  />
+                  {resumeFile ? (
+                    <div className="text-center p-2">
+                      <p className="text-xs text-gray-900 font-medium truncate max-w-37.5">📄 {resumeFile.name}</p>
+                      <p className="text-[10px] text-green-500 mt-1">✓ Ready</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-[10px] text-gray-400">Click to upload PDF</p>
+                    </div>
+                  )}
+                </label>
+                {resumeFile && (
+                  <button onClick={() => setResumeFile(null)} className="text-[10px] text-red-400 hover:text-red-600 mt-2">
+                    × Remove
+                  </button>
+                )}
+              </div>
 
-          <div className="grid grid-cols-2 gap-6">
-
-            {/* Resume Upload */}
-            <div className="bg-white border border-gray-100 rounded-xl p-6">
-              <p className="text-xs text-gray-400 mb-3">Your Resume</p>
-
-              <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition">
-                <input
-                  type="file"
-                  accept=".pdf"
-                  className="hidden"
+              {/* Job Description */}
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-[10px] font-medium text-gray-400 mb-2 uppercase tracking-wider">Job Description</p>
+                <textarea
+                  value={jobDescription}
                   onChange={(e) => {
-                    setResumeFile(e.target.files[0])
+                    setJobDescription(e.target.value)
                     setError("")
                   }}
+                  placeholder="Paste here..."
+                  rows={6} 
+                  className="w-full text-xs text-gray-700 border border-gray-100 rounded-lg px-3 py-2 outline-none focus:border-gray-300 resize-none leading-relaxed bg-gray-50/50"
                 />
-                {resumeFile ? (
-                  <div className="text-center">
-                    <p className="text-xs text-gray-900 font-medium mb-1">📄 {resumeFile.name}</p>
-                    <p className="text-xs text-gray-400">{(resumeFile.size / 1024 / 1024).toFixed(2)} MB</p>
-                    <p className="text-xs text-green-500 mt-2">✓ Ready to analyze</p>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">Click to upload PDF</p>
-                    <p className="text-xs text-gray-300">PDF only · max 5MB</p>
-                  </div>
-                )}
-              </label>
-
-              {resumeFile && (
-                <button
-                  onClick={() => setResumeFile(null)}
-                  className="text-xs text-gray-400 hover:text-gray-600 mt-2"
-                >
-                  × Remove file
-                </button>
-              )}
+              </div>
             </div>
 
-            {/* Job Description */}
-            <div className="bg-white border border-gray-100 rounded-xl p-6">
-              <p className="text-xs text-gray-400 mb-3">Job Description</p>
-              <textarea
-                value={jobDescription}
-                onChange={(e) => {
-                  setJobDescription(e.target.value)
-                  setError("")
-                }}
-                placeholder="Paste the job description here..."
-                rows={10}
-                className="w-full text-xs text-gray-700 border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-gray-400 resize-none leading-relaxed"
-              />
-            </div>
+            {error && <p className="text-[10px] text-red-500">{error}</p>}
 
+            <Button
+              onClick={handleScore}
+              disabled={loading || !resumeFile || !jobDescription.trim()}
+              className="text-xs bg-gray-900 hover:bg-gray-700 text-white px-8 h-9"
+            >
+              {loading ? "Analyzing..." : "Analyze Resume"}
+            </Button>
           </div>
+        ) : (
+          // Results Section 
 
-          {error && <p className="text-xs text-red-500">{error}</p>}
-
-          <Button
-            onClick={handleScore}
-            disabled={loading || !resumeFile || !jobDescription.trim()}
-            className="text-xs bg-gray-900 hover:bg-gray-700 text-white"
-          >
-            {loading ? "Analyzing..." : "Analyze Resume"}
-          </Button>
-
-        </div>
-      ) : (
-        <div className="space-y-6">
-
-          {/* Score card */}
-          <div className={`border rounded-xl p-6 ${getScoreBg(result.score)}`}>
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-xs text-gray-400 mb-2">Match Score</p>
-                <p className={`text-5xl font-medium mb-1 ${getScoreColor(result.score)}`}>
-                  {result.score}<span className="text-lg text-gray-400">/100</span>
-                </p>
-                <p className={`text-xs font-medium mt-1 ${getScoreColor(result.score)}`}>
-                  {getScoreLabel(result.score)}
-                </p>
+          <div className="space-y-4 pb-10">
+            <div className={`border rounded-xl p-5 ${getScoreBg(result.score)}`}>
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[10px] text-gray-400 mb-1">Match Score</p>
+                  <p className={`text-4xl font-bold ${getScoreColor(result.score)}`}>
+                    {result.score}<span className="text-sm text-gray-400">/100</span>
+                  </p>
+                  <p className={`text-[10px] font-medium mt-1 ${getScoreColor(result.score)}`}>
+                    {getScoreLabel(result.score)}
+                  </p>
+                </div>
               </div>
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 ${
-                result.score >= 75 ? "border-green-400 bg-green-50" :
-                result.score >= 50 ? "border-yellow-400 bg-yellow-50" :
-                "border-red-400 bg-red-50"
-              }`}>
-                <p className={`text-sm font-medium ${getScoreColor(result.score)}`}>{result.score}</p>
+              <div className="border-t border-gray-200/50 mt-3 pt-3">
+                <p className="text-[10px] text-gray-400 mb-1">Feedback</p>
+                <p className="text-xs text-gray-700 leading-relaxed">{result.feedback}</p>
               </div>
             </div>
-            <div className="border-t border-gray-100 mt-4 pt-4">
-              <p className="text-xs text-gray-400 mb-1">Overall Feedback</p>
-              <p className="text-xs text-gray-700 leading-relaxed">{result.feedback}</p>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-[10px] font-bold text-green-600 mb-3 uppercase">Strengths</p>
+                <div className="space-y-2">
+                  {result.strengths?.map((s, i) => (
+                    <p key={i} className="text-xs text-gray-600 flex gap-2"><span>•</span>{s}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-[10px] font-bold text-yellow-600 mb-3 uppercase">Improvements</p>
+                <div className="space-y-2">
+                  {result.weaknesses?.map((w, i) => (
+                    <p key={i} className="text-xs text-gray-600 flex gap-2"><span>•</span>{w}</p>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            <button
+              onClick={() => { setResult(null); setResumeFile(null); setJobDescription(""); }}
+              className="text-xs text-gray-400 hover:text-gray-900 transition"
+            >
+              ← Analyze another
+            </button>
           </div>
-
-          {/* Strengths + Weaknesses */}
-          <div className="grid grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-100 rounded-xl p-6">
-              <p className="text-xs text-gray-400 mb-4">Strengths ✅</p>
-              <div className="space-y-2">
-                {result.strengths?.map((strength, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <span className="text-green-500 text-xs mt-0.5">•</span>
-                    <p className="text-xs text-gray-700 leading-relaxed">{strength}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-100 rounded-xl p-6">
-              <p className="text-xs text-gray-400 mb-4">Areas to Improve ⚠️</p>
-              <div className="space-y-2">
-                {result.weaknesses?.map((weakness, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <span className="text-yellow-500 text-xs mt-0.5">•</span>
-                    <p className="text-xs text-gray-700 leading-relaxed">{weakness}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Missing Skills */}
-          {result.missingSkills?.length > 0 && (
-            <div className="bg-white border border-gray-100 rounded-xl p-6">
-              <p className="text-xs text-gray-400 mb-4">Missing Skills 🎯</p>
-              <div className="flex flex-wrap gap-2">
-                {result.missingSkills.map((skill, i) => (
-                  <span key={i} className="text-xs px-3 py-1 bg-red-50 text-red-500 rounded-full border border-red-100">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <button
-            onClick={() => {
-              setResult(null)
-              setResumeFile(null)
-              setJobDescription("")
-              setError("")
-            }}
-            className="text-xs text-gray-400 hover:text-gray-600"
-          >
-            ← Analyze another resume
-          </button>
-
-        </div>
-      )}
-
+        )}
+      </div>
     </DashboardLayout>
   )
 }
