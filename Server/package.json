@@ -34,6 +34,8 @@
     "node-cron": "^4.2.1",
     "parser": "^0.1.4",
     "pdf-parse": "^2.4.5",
+    "pdf-to-text": "^0.0.7",
+    "text-from-pdf": "^1.1.2",
     "winston": "^3.19.0",
     "xss": "^1.0.15"
   },

@@ -1,29 +1,43 @@
+// 1. Keep the mock at the top to be 100% safe on Render
+if (typeof global.DOMMatrix === 'undefined') {
+  global.DOMMatrix = class DOMMatrix {
+    constructor() { this.m11 = 1; this.m22 = 1; this.m33 = 1; this.m44 = 1; }
+  };
+}
+
+const { pdfToText } = require("text-from-pdf"); // The New Library
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const pdf = require("pdf-parse");
-const logger = require("../middleware/logger");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
- console.log("FILE RECEIVED:", req.file);
+
 const scoreResume = async (req, res) => {
   try {
     const { jobDescription } = req.body;
+
+    // 2. Check if file arrived from Multer
     if (!req.file || !jobDescription) {
-      return res
-        .status(400)
-        .json({ message: "Upload a PDF and provide a Job Description" });
+      return res.status(400).json({ message: "Please upload a PDF and provide a Job Description" });
     }
 
-    const data = await pdf(req.file.buffer);
-    const resumeText = data.text;
+    console.log("DEBUG: Starting extraction with text-from-pdf...");
 
-    // --- NEW: PRE-CHECK (Save your API Quota) ---
-    if (resumeText.length < 50 || jobDescription.length < 20) {
-      return res.status(400).json({
-        message:
-          "The resume or job description is too short to analyze. Please provide more detail.",
-      });
+    // 3. Extract Text (This library returns a Promise by default)
+    let resumeText = "";
+    try {
+      // Pass the buffer directly to the library
+      resumeText = await pdfToText(req.file.buffer);
+      console.log("DEBUG: PDF Extraction Success. Length:", resumeText.length);
+    } catch (pdfErr) {
+      console.error("PDF EXTRACTION FAILED:", pdfErr.message);
+      return res.status(500).json({ message: "Failed to read PDF content.", error: pdfErr.message });
     }
 
+    // 4. Safety Check
+    if (!resumeText || resumeText.trim().length < 50) {
+      return res.status(400).json({ message: "The PDF seems to be empty or a scanned image." });
+    }
+
+    // 5. AI Section (Gemini)
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
@@ -41,67 +55,22 @@ const scoreResume = async (req, res) => {
       }
     `;
 
+    console.log("DEBUG: Sending to Gemini...");
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig: { responseMimeType: "application/json" },
     });
 
-    // let jsonResponse = JSON.parse(result.response.text());-----------------1
-
-    // FIND THIS LINE:
-    // let jsonResponse = JSON.parse(result.response.text());
-
-    // REPLACE IT WITH THIS:
+    // 6. Safe JSON Parsing
     const rawText = result.response.text();
-    // This regex removes ```json and ``` so JSON.parse doesn't crash
     const cleanJson = rawText.replace(/```json|```/g, "").trim();
-    let jsonResponse;
-
-    try {
-      jsonResponse = JSON.parse(cleanJson);
-    } catch (parseError) {
-      console.error("JSON Parse Error. Raw text was:", rawText);
-      return res
-        .status(500)
-        .json({ message: "AI returned invalid data format." });
-    }
-
-    // --- NEW: SMART BACKUP LOGIC (Based on Score) ---
-
-    // 1. Handle Strengths
-    if (!jsonResponse.strengths || jsonResponse.strengths.length === 0) {
-      jsonResponse.strengths = ["No specific strengths found for this match."];
-    }
-
-    // 2. Handle Weaknesses (SMART)
-    if (!jsonResponse.weaknesses || jsonResponse.weaknesses.length === 0) {
-      if (jsonResponse.score > 80) {
-        // High score? Then say it's a great match
-        jsonResponse.weaknesses = [
-          "No significant weaknesses found. Great match!",
-        ];
-      } else if (jsonResponse.score < 20) {
-        // Low score? Then tell them the content is missing
-        jsonResponse.weaknesses = [
-          "The resume does not provide enough information to match this job.",
-        ];
-      } else {
-        // Medium score? Just a neutral message
-        jsonResponse.weaknesses = [
-          "No major weaknesses, but consider adding more relevant projects.",
-        ];
-      }
-    }
+    const jsonResponse = JSON.parse(cleanJson);
 
     res.status(200).json(jsonResponse);
+
   } catch (error) {
-    logger.error("AI Error:", error);
-    if (error.status === 429) {
-      return res
-        .status(429)
-        .json({ message: "AI busy. Try again in 1 minute." });
-    }
-    res.status(500).json({ message: "Failed to score resume." });
+    console.error("AI ROUTE ERROR:", error);
+    res.status(500).json({ message: "Failed to analyze resume.", details: error.message });
   }
 };
 
