@@ -13,7 +13,7 @@ const uploadResume = async (req, res) => {
     }
 
    const userName = (req.user && req.user.name) ? req.user.name.replace(/\s+/g, "_") : "user_" + Date.now();
-    const customFileName = `resume_${userName}_${Date.now()}`;
+    const customFileName = `resume_${userName}_${Date.now()}.pdf`;
     const fileBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
 
     const result = await cloudinary.uploader.upload(fileBase64, {
