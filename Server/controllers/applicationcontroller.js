@@ -67,7 +67,7 @@ const getApplicationById = async (req, res) => {
 const getMyApplications = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user._id);
-    const applications = await Application.find({ Candidate: userId })
+    const applications = await Application.find({ candidate: userId })
       .populate("job", "title location salary jobType")
       .sort({ createdAt: -1 });
     console.log("APPLICATIONS FOUND:", applications.length);
