@@ -66,8 +66,8 @@ const getApplicationById = async (req, res) => {
 // GET my applications — candidate only
 const getMyApplications = async (req, res) => {
   try {
-    console.log("LOGGED IN USER ID:", req.user._id);
-    const applications = await Application.find({ Candidate: req.user._id })
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+    const applications = await Application.find({ Candidate: userId })
       .populate("job", "title location salary jobType")
       .sort({ createdAt: -1 });
     console.log("APPLICATIONS FOUND:", applications.length);
