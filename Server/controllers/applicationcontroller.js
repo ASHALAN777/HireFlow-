@@ -1,7 +1,6 @@
 const Application = require("../Models/Applicationschema");
 const Job = require("../Models/job-schema");
 const mongoose = require("mongoose");
-const { isValidObjectId } = require("mongoose");
 
 // POST apply for a job — candidate only
 const applyJob = async (req, res) => {
@@ -65,51 +64,18 @@ const getApplicationById = async (req, res) => {
 };
 
 // GET my applications — candidate onl
-// const getMyApplications = async (req, res) => {
-//   try {
-//     const userId = new mongoose.Types.ObjectId(req.user._id);
-//     const applications = await Application.find({ candidate: userId })
-//       .populate("job", "title location salary jobType")
-//       .sort({ createdAt: -1 });
-//     console.log("APPLICATIONS FOUND:", applications.length);
-//     res.status(200).json(applications);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };        
-
-
-
-
-
 const getMyApplications = async (req, res) => {
   try {
-    // 2. Safety check: make sure user exists
-    if (!req.user || !req.user._id) {
-        return res.status(401).json({ message: "Not authenticated" });
-    }
-
-    // Convert string ID to Mongoose ObjectId
     const userId = new mongoose.Types.ObjectId(req.user._id);
-
-    // Use lowercase 'candidate' to match your applyJob function logic
     const applications = await Application.find({ candidate: userId })
       .populate("job", "title location salary jobType")
       .sort({ createdAt: -1 });
-
-    console.log("APPLICATIONS FOUND FOR USER " + userId + ":", applications.length);
+    console.log("APPLICATIONS FOUND:", applications.length);
     res.status(200).json(applications);
   } catch (error) {
-    // 3. Log the actual error so you can see it in Render logs
-    console.error("GET MY APPS ERROR:", error.message);
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: "Server error" });
   }
 };
-
-
-
-
-
 
 // PUT update application status — admin only (kanban)
 const updateStatus = async (req, res) => {
