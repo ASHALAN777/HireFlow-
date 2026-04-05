@@ -30,12 +30,12 @@ router.post("/login", loginvalidation, Logincontrol);
 router.post("/logout", (req, res) => {
   res.clearCookie("access_token", {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     secure: process.env.NODE_ENV === "production",
   });
   res.clearCookie("refresh_token", {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     secure: process.env.NODE_ENV === "production",
   });
   res.json({ message: "Logged out" });
