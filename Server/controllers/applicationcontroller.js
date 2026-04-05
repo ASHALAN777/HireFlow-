@@ -1,14 +1,22 @@
 const Application = require("../Models/Applicationschema");
 const Job = require("../Models/job-schema");
 const mongoose = require("mongoose");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // POST apply for a job — candidate only
 const applyJob = async (req, res) => {
   try {
-    const { jobId, coverLetter } = req.body;
+    const { jobId, coverLetter, resumeUrl } = req.body;
 
     // check if job exists
     const job = await Job.findById(jobId);
+
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     // check if already applied
@@ -22,7 +30,7 @@ const applyJob = async (req, res) => {
     const application = await Application.create({
       job: jobId,
       candidate: req.user._id,
-      resumeUrl: req.body.resumeUrl,
+      resumeUrl: resumeUrl,
       coverLetter,
     });
 

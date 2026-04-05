@@ -16,8 +16,7 @@ const applicationSchema = new mongoose.Schema({
     required: true
   },
   coverLetter: {
-    type: String,
-    default: null
+    type: String
   },
   aiScore: {
     type: Number,

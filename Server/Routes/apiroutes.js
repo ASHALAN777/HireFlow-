@@ -56,7 +56,7 @@ router.get("/applications/:id", authMiddleware, isAdmin, getApplicationById);
 router.put("/applications/:id/status", authMiddleware, isAdmin, updateStatus);
 
 // AI
-router.post("/ai/score", authMiddleware, scoreResume);
+router.post("/ai/score", authMiddleware, upload.single("resume"), scoreResume)
 
 // Upload
 router.post(
