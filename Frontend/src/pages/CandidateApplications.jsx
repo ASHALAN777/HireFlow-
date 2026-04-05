@@ -8,10 +8,11 @@ export default function CandidateApplications() {
 
   useEffect(() => {
     API.get("/api/applications/me").then((res) => setApplications(res.data))
+    console.log(res.data)
     
   }, [])
 
-   console.log(res.data)
+   
 
   return (
     <DashboardLayout title="My Applications">
