@@ -1,35 +1,40 @@
-// 1. Keep the mock at the top to be 100% safe on Render
-if (typeof global.DOMMatrix === 'undefined') {
-  global.DOMMatrix = class DOMMatrix {
-    constructor() { this.m11 = 1; this.m22 = 1; this.m33 = 1; this.m44 = 1; }
-  };
-}
-
-const { pdfToText } = require("text-from-pdf"); // The New Library
+const { pdfToText } = require("text-from-pdf");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const fs = require("fs");   // New: for temp files
+const path = require("path"); // New: for paths
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const scoreResume = async (req, res) => {
+  // Define a temporary path in the only writable folder on Render
+  const tempFilePath = path.join("/tmp", `resume_${Date.now()}.pdf`);
+
   try {
     const { jobDescription } = req.body;
 
-    // 2. Check if file arrived from Multer
     if (!req.file || !jobDescription) {
-      return res.status(400).json({ message: "Please upload a PDF and provide a Job Description" });
+      return res.status(400).json({ message: "Upload a PDF and provide a Job Description" });
     }
 
-    console.log("DEBUG: Starting extraction with text-from-pdf...");
+    // --- STEP 1: Save the Binary Buffer to a temporary file ---
+    // text-from-pdf MUST have a file path to work
+    fs.writeFileSync(tempFilePath, req.file.buffer);
 
-    // 3. Extract Text (This library returns a Promise by default)
+    console.log("DEBUG: File saved to /tmp. Starting text extraction...");
+
+    // --- STEP 2: Extract Text using the file path ---
     let resumeText = "";
     try {
-      // Pass the buffer directly to the library
-      resumeText = await pdfToText(req.file.buffer);
-      console.log("DEBUG: PDF Extraction Success. Length:", resumeText.length);
+      resumeText = await pdfToText(tempFilePath);
+      console.log("DEBUG: Extraction Success. Length:", resumeText.length);
     } catch (pdfErr) {
       console.error("PDF EXTRACTION FAILED:", pdfErr.message);
       return res.status(500).json({ message: "Failed to read PDF content.", error: pdfErr.message });
+    } finally {
+      // --- STEP 3: Clean up (Delete the temp file) ---
+      if (fs.existsSync(tempFilePath)) {
+        fs.unlinkSync(tempFilePath);
+      }
     }
 
     // 4. Safety Check
@@ -39,29 +44,13 @@ const scoreResume = async (req, res) => {
 
     // 5. AI Section (Gemini)
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `Analyze Resume: ${resumeText} against Job: ${jobDescription}. Return JSON: {score, strengths, weaknesses, feedback, missingSkills}`;
 
-    const prompt = `
-      Analyze this Resume against the Job Description.
-      Resume: ${resumeText}
-      Job Description: ${jobDescription}
-
-      Return ONLY a JSON object:
-      {
-        "score": <number 0-100>,
-        "strengths": ["list"],
-        "weaknesses": ["list"],
-        "feedback": "string",
-        "missingSkills": ["list"]
-      }
-    `;
-
-    console.log("DEBUG: Sending to Gemini...");
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig: { responseMimeType: "application/json" },
     });
 
-    // 6. Safe JSON Parsing
     const rawText = result.response.text();
     const cleanJson = rawText.replace(/```json|```/g, "").trim();
     const jsonResponse = JSON.parse(cleanJson);
@@ -69,6 +58,9 @@ const scoreResume = async (req, res) => {
     res.status(200).json(jsonResponse);
 
   } catch (error) {
+    // Ensure file is deleted even if AI fails
+    if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
+    
     console.error("AI ROUTE ERROR:", error);
     res.status(500).json({ message: "Failed to analyze resume.", details: error.message });
   }
