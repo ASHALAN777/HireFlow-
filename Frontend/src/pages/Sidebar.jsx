@@ -25,7 +25,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-6 py-5 border-b border-gray-100">
         <img
-          src="/hireflow_logo_updated.svg"
+          src="/Hireflow_logo.svg"
           alt="Logo"
           className="h-5 w-auto" // Fixed logo height
         />
