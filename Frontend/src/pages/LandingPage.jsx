@@ -8,7 +8,11 @@ export default function Landing() {
 
       {/* Navbarq */}
       <nav className="flex items-center justify-between px-8 py-4 border-b border-gray-100">
-        <h1 className="text-lg font-medium text-gray-900">HireFlow</h1>
+         <img
+          src="/Hireflow_logo.svg"
+          alt="Logo"
+          className="h-7 w-auto" 
+        />
         <div className="flex items-center gap-3">
           <Link to="/jobs">
             <Button variant="ghost" className="text-sm text-gray-500">Browse Jobs</Button>

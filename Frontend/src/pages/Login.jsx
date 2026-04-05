@@ -24,7 +24,7 @@ export default function Login() {
     setError("");
     try {
       const res = await API.post("/api/auth/login", form);
-      Login(res.data); // ← updates AuthContext with user data
+      Login(res.data);
       if (res.data.role === "Admin") {
         navigate("/admin/dashboard");
       } else {

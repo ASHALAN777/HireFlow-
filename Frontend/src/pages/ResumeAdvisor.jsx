@@ -128,7 +128,7 @@ export default function ResumeAdvisor() {
             </Button>
           </div>
         ) : (
-          // Results Section 
+          
 
           <div className="space-y-4 pb-10">
             <div className={`border rounded-xl p-5 ${getScoreBg(result.score)}`}>

@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
   profileImage: { type: String, default: null },
 
   // candidate only
-  experience: { type: String, default: null }, // fresher, 1-2 years etc
+  experience: { type: String, default: null }, 
   resumeUrl: { type: String, default: null },
   skills: { type: [String], default: [] },
   bio: { type: String, default: null },
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   companyName: { type: String, default: null },
   companyWebsite: { type: String, default: null },
   companySize: { type: String, default: null },
-  jobRole: { type: String, default: null }, // HR, CTO, Founder etc
+  jobRole: { type: String, default: null },
 
   // forgot password
   resetOTP: { type: String, default: null },

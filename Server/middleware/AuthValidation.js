@@ -54,7 +54,7 @@ const loginvalidation = (req, res, next) => {
   next();
 };
 
-// Job validation
+// iob validation
 const createJobValidation = (req, res, next) => {
   const schema = Joi.object({
     title: Joi.string().min(3).max(100).required(),
@@ -88,7 +88,7 @@ const updateJobValidation = (req, res, next) => {
   next();
 };
 
-// Application validation
+// application validation
 const applyJobValidation = (req, res, next) => {
   const schema = Joi.object({
     jobId: Joi.string().required(),
@@ -101,7 +101,7 @@ const applyJobValidation = (req, res, next) => {
   next();
 };
 
-// Profile update validation
+// profile update validation
 const updateProfileValidation = (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().min(2).optional(),

@@ -23,7 +23,7 @@ const User = require("../Models/user-schema");
 const { updateProfile } = require("../controllers/profileController");
 const router = require("express").Router();
 
-// Auth routes
+// auth routes
 router.post("/signup", signupvalidation, Signupcontrol);
 router.post("/login", loginvalidation, Logincontrol);
 

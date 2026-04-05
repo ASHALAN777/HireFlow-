@@ -14,7 +14,7 @@ api.interceptors.response.use(
     const originalReq = error.config;
     const message = error.response?.data?.message;
 
-    // access token expired → try refresh silently
+    // access token expired  then it try refresh silently
     if (
       error.response?.status === 401 &&
       (message === "ACCESS_TOKEN_EXPIRED" || message === "UNAUTHORIZED") &&
@@ -31,7 +31,7 @@ api.interceptors.response.use(
         );
         return api(originalReq);
       } catch (refreshError) {
-        // refresh failed → just reject, let ProtectedRoute handle redirect
+        // refresh failed  then it just reject, let ProtectedRoute handle redirect thingss
         return Promise.reject(refreshError);
       }
     }

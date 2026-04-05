@@ -9,17 +9,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// POST apply for a job — candidate only
+// post apply for a job — candidate only
 const applyJob = async (req, res) => {
   try {
     const { jobId, coverLetter, resumeUrl } = req.body;
 
-    // check if job exists
+  
     const job = await Job.findById(jobId);
 
     if (!job) return res.status(404).json({ message: "Job not found" });
 
-    // check if already applied
+    
     const alreadyApplied = await Application.findOne({
       job: jobId,
       candidate: req.user._id,
@@ -40,7 +40,7 @@ const applyJob = async (req, res) => {
   }
 };
 
-// GET all applications — admin only
+// get all applications — admin only
 const getAllApplications = async (req, res) => {
   try {
     const adminjobs = await Job.find({ postedBy: req.user._id }).select("_id");
@@ -71,7 +71,7 @@ const getApplicationById = async (req, res) => {
   }
 };
 
-// GET my applications — candidate onl
+// get my applications — candidate onl
 const getMyApplications = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user._id);
@@ -85,7 +85,7 @@ const getMyApplications = async (req, res) => {
   }
 };
 
-// PUT update application status — admin only (kanban)
+//  update application status — admin only
 const updateStatus = async (req, res) => {
   try {
     const { status } = req.body;

@@ -84,10 +84,14 @@ export default function Apply() {
     }
   };
 
-  // Shared Navbar
+  // Double navbar for public and candidate
   const Navbar = () => (
     <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-      <Link to="/"><p className="text-sm font-medium text-gray-900">HireFlow</p></Link>
+       <img
+          src="/Hireflow_logo.svg"
+          alt="Logo"
+          className="h-7 w-auto" 
+        />
       {user && (
         <div className="flex items-center gap-4">
           <Link to={dashboardPath} className="text-xs text-gray-400 hover:text-gray-600">Dashboard</Link>

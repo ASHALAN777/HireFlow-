@@ -99,19 +99,18 @@ export default function Profile() {
     setResumeError("");
     setResumeSuccess("");
     try {
-      // 1. upload file
+    
       const formData = new FormData();
       formData.append("resume", resumeFile);
       const uploadRes = await API.post("/api/upload/resume", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // 2. save resumeUrl to profile
+     
       const updateRes = await API.put("/api/auth/update-profile", {
         resumeUrl: uploadRes.data.resumeUrl,
       });
 
-      // 3. update context so user.resumeUrl is fresh
       Login(updateRes.data.user);
       setResumeSuccess("Resume uploaded successfully!");
       setResumeFile(null);

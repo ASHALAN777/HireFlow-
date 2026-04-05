@@ -27,7 +27,7 @@ const Signupcontrol = async (req, res) => {
     userModel.password = await bcrypt.hash(password, 10);
     await userModel.save();
 
-    // send email but don't crash signup if it fails
+
     try {
       await sgMail.send({
         from: process.env.SENDGRID_FROM,

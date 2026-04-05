@@ -5,6 +5,14 @@ import API from "@/api/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+
+const Row = ({ label, value }) => (
+  <div className="flex justify-between items-center">
+    <p className="text-xs text-gray-400 w-32 shrink-0">{label}</p>
+    <p className="text-xs text-gray-900 flex-1">{value}</p>
+  </div>
+);
+
 export default function CandidateProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -170,10 +178,3 @@ export default function CandidateProfile() {
   );
 }
 
-// reusable row component
-const Row = ({ label, value }) => (
-  <div className="flex justify-between items-center">
-    <p className="text-xs text-gray-400 w-32 shrink-0">{label}</p>
-    <p className="text-xs text-gray-900 flex-1">{value}</p>
-  </div>
-);

@@ -1,5 +1,7 @@
 const Job = require("../Models/job-schema");
 
+
+// get jobs fro public
 const getPublicJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ isActive: true })
@@ -10,6 +12,8 @@ const getPublicJobs = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// get jobs created by user
 const getAllJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ isActive: true, postedBy: req.user._id  })
@@ -21,6 +25,8 @@ const getAllJobs = async (req, res) => {
   }
 };
 
+
+//specific job
 const getJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id).populate(
@@ -34,6 +40,7 @@ const getJobById = async (req, res) => {
   }
 };
 
+// create job
 const createJob = async (req, res) => {
   try {
     const { title, description, skills, location, salary, jobType } = req.body;
@@ -52,6 +59,8 @@ const createJob = async (req, res) => {
   }
 };
 
+
+// update job
 const updateJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -60,7 +69,7 @@ const updateJob = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    // ADD OWNERSHIP CHECK
+  
     if (job.postedBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({ 
         message: "Unauthorized - you can only edit your own jobs" 
@@ -80,6 +89,8 @@ const updateJob = async (req, res) => {
   } }
 
 
+
+  // delete job
 const deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
@@ -88,7 +99,7 @@ const deleteJob = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    // ADD OWNERSHIP CHECK
+  
     if (job.postedBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({ 
         message: "Unauthorized - you can only delete your own jobs" 
