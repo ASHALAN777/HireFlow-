@@ -63,7 +63,7 @@ const getApplicationById = async (req, res) => {
   }
 };
 
-// GET my applications — candidate only
+// GET my applications — candidate onl
 const getMyApplications = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.user._id);
