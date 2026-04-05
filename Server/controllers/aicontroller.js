@@ -46,7 +46,25 @@ const scoreResume = async (req, res) => {
       generationConfig: { responseMimeType: "application/json" },
     });
 
-    let jsonResponse = JSON.parse(result.response.text());
+    // let jsonResponse = JSON.parse(result.response.text());-----------------1
+
+    // FIND THIS LINE:
+    // let jsonResponse = JSON.parse(result.response.text());
+
+    // REPLACE IT WITH THIS:
+    const rawText = result.response.text();
+    // This regex removes ```json and ``` so JSON.parse doesn't crash
+    const cleanJson = rawText.replace(/```json|```/g, "").trim();
+    let jsonResponse;
+
+    try {
+      jsonResponse = JSON.parse(cleanJson);
+    } catch (parseError) {
+      console.error("JSON Parse Error. Raw text was:", rawText);
+      return res
+        .status(500)
+        .json({ message: "AI returned invalid data format." });
+    }
 
     // --- NEW: SMART BACKUP LOGIC (Based on Score) ---
 
