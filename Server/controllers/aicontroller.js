@@ -3,7 +3,7 @@ const pdf = require("pdf-parse-fork");
 const logger = require("../middleware/logger");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
+ console.log("FILE RECEIVED:", req.file);
 const scoreResume = async (req, res) => {
   try {
     const { jobDescription } = req.body;
