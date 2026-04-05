@@ -24,7 +24,7 @@ export default function Sidebar() {
     <div className="fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-20">
 
       {/* Logo */}
-      <div className="px-6 py-4 border-b border-gray-100">
+      <div className="px-6 py-5 border-b border-gray-100">
        <link rel="icon" type="image/svg+xml" href="/hireflow_logo_updated.svg" />
       </div>
 
