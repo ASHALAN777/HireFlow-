@@ -48,9 +48,11 @@ export default function JobDetail() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-        <Link to="/">
-          <p className="text-sm font-medium text-gray-900">HireFlow</p>
-        </Link>
+       <img
+          src="/Hireflow_logo.svg"
+          alt="Logo"
+          className="h-7 w-auto" 
+        />
 
         {user ? (
           <div className="flex items-center gap-4">

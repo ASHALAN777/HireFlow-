@@ -4,6 +4,7 @@ import API from "@/api/api";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/components/Global/AuthProvider";
+import LoginAnimation from "@/assets/Login.json";
 
 import { Player } from "@lottiefiles/react-lottie-player"
 
@@ -107,7 +108,7 @@ export default function Login() {
           <Player
             autoplay
             loop
-            src="src/assets/Login.json"
+            src={LoginAnimation}
             style={{ height: "200px", width: "200px" }}
           />
         

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "@/api/api";
 import { Player } from "@lottiefiles/react-lottie-player";
+import registerAnimation from "@/assets/Welcome.json";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ export default function Register() {
             autoplay
             loop={false}
             keepLastFrame
-            src="src/assets/Welcome.json"
+            src={registerAnimation}
             style={{ height: "300px", width: "300px" }}
           />
         </div>
