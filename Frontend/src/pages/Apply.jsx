@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import API from "@/api/api";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { AuthContext } from "@/components/Global/AuthProvider";
-import applyAnimation from "@/assets/ApplyAnimation.json";
+import applyAnimation from "@/assets/CheckboxAnimation.json";
 
 export default function Apply() {
   const { jobId } = useParams();
