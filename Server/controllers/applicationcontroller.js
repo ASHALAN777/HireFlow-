@@ -66,9 +66,11 @@ const getApplicationById = async (req, res) => {
 // GET my applications — candidate only
 const getMyApplications = async (req, res) => {
   try {
+    console.log("LOGGED IN USER ID:", req.user._id);
     const applications = await Application.find({ Candidate: req.user._id })
       .populate("job", "title location salary jobType")
       .sort({ createdAt: -1 });
+    console.log("APPLICATIONS FOUND:", applications.length);
     res.status(200).json(applications);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
