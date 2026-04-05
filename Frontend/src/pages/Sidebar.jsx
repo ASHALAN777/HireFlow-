@@ -1,31 +1,34 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { AuthContext } from "@/components/Global/AuthProvider"
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "@/components/Global/AuthProvider";
 
 const adminMenu = [
   { label: "Dashboard", path: "/admin/dashboard" },
   { label: "Job Manager", path: "/admin/jobs" },
   { label: "Status", path: "/admin/status" },
   { label: "All Applicants", path: "/admin/applicants" },
-]
+];
 
 const candidateMenu = [
   { label: "Dashboard", path: "/candidate/dashboard" },
   { label: "Browse Jobs", path: "/jobs" },
   { label: "My Applications", path: "/candidate/applications" },
   { label: "Resume Advisor", path: "/candidate/resume-advisor" },
-]
+];
 
 export default function Sidebar() {
-  const { user } = useContext(AuthContext)
-  const menu = user?.role === "Admin" ? adminMenu : candidateMenu
+  const { user } = useContext(AuthContext);
+  const menu = user?.role === "Admin" ? adminMenu : candidateMenu;
 
   return (
     <div className="fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-20">
-
       {/* Logo */}
       <div className="px-6 py-5 border-b border-gray-100">
-       <link rel="icon" type="image/svg+xml" href="/hireflow_logo_updated.svg" />
+        <img
+          src="/hireflow_logo_updated.svg"
+          alt="Logo"
+          className="h-7 w-auto" // Fixed logo height
+        />
       </div>
 
       {/* Menu Items */}
@@ -50,7 +53,6 @@ export default function Sidebar() {
           Profile
         </Link>
       </div>
-
     </div>
-  )
+  );
 }
