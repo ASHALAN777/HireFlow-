@@ -3,7 +3,9 @@
 <!-- BANNER SVG -->
 <img src="https://readme-typing-svg.demolab.com?font=DM+Mono&size=13&pause=1000&color=63B3ED&center=true&vCenter=true&width=435&lines=Intelligent+AI+Recruitment+Ecosystem;Powered+by+Google+Gemini+%C2%B7+MERN+Stack" alt="Typing SVG" />
 
-# ⬡ HireFlow
+<img src="./logo.svg" width="52" height="52" align="left" style="margin-right:12px" />
+
+# &nbsp;HireFlow
 
 **A professional-grade MERN application that revolutionizes the hiring process.**  
 Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid · Hybrid Cloud Architecture.
