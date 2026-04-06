@@ -10,7 +10,6 @@ Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid 
 
 <br/>
 
-[![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Vercel](https://img.shields.io/badge/Frontend-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
 [![Render](https://img.shields.io/badge/Backend-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](https://render.com/)
 [![Gemini](https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=flat-square&logo=googlegemini&logoColor=white)](https://deepmind.google/technologies/gemini/)
@@ -142,7 +141,6 @@ Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid 
 │      │     Data     │  │  PDF Storage  │  │Email │ │
 │      └──────────────┘  └───────────────┘  └──────┘ │
 │                                                      │
-│  🐳 Entire ecosystem containerized via Docker        │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -150,27 +148,10 @@ Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid 
 |-------|----------|---------|
 | **Frontend** | Vercel | Edge delivery, global CDN |
 | **Backend** | Render | Persistent service, long-running AI tasks |
-| **Containers** | Docker | Run-anywhere portability, environment parity |
 
 ---
 
 ## 🚀 Installation
-
-### Option A — Docker *(Recommended)*
-
-The fastest way to get HireFlow running with a single command:
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/ASHALAN777/HireFlow-.git
-
-# 2. Setup your .env files (use .env.example as a guide)
-
-# 3. Boot the entire ecosystem
-docker-compose up --build
-```
-
-### Option B — Manual
 
 ```bash
 # Backend
