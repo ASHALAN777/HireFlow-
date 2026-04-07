@@ -1,5 +1,5 @@
 const UserModel = require("../Models/user-schema");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
@@ -26,7 +26,6 @@ const Signupcontrol = async (req, res) => {
     });
     userModel.password = await bcrypt.hash(password, 10);
     await userModel.save();
-
 
     try {
       await sgMail.send({

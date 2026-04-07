@@ -1,7 +1,7 @@
 const UserModel = require("../Models/user-schema");
 const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const logger = require("../middleware/logger");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -53,9 +53,9 @@ const otpverify = async (req, res) => {
 
     const trimmedOtp = otp.trim();
     if (!/^\d{6}$/.test(trimmedOtp)) {
-      return res.status(400).json({ 
-        message: "OTP must be 6 digits", 
-        success: false 
+      return res.status(400).json({
+        message: "OTP must be 6 digits",
+        success: false,
       });
     }
 
