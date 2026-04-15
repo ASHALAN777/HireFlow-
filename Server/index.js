@@ -27,7 +27,7 @@ const frontendURL = process.env.frontend_url || "http://localhost:5173";
 
 const myStream = {
   write: (text) => {
-    consoleinfo(text.trim());
+    logger.info(text.trim());
   },
 };
 
