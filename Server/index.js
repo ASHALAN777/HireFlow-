@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(
   cors({
-    origin: "*",
+    origin: frontendURL,
 
     credentials: true,
   }),
