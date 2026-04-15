@@ -1,5 +1,6 @@
 const { pdfToText } = require("text-from-pdf");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const logger = require("../middleware/logger");
 const fs = require("fs");
 const path = require("path");
 

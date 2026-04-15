@@ -1,5 +1,6 @@
 const Application = require("../Models/Applicationschema");
 const Job = require("../Models/job-schema");
+const logger = require("../middleware/logger");
 const mongoose = require("mongoose");
 const cloudinary = require("cloudinary").v2;
 

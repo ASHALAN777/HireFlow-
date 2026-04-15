@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const logger = require("../middleware/logger");
 const redisClient = require("./redis");
-// const { redisClient } = require("@upstash/redis");
+
 
 const authMiddleware = async (req, res, next) => {
   try {

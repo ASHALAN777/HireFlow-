@@ -1,4 +1,5 @@
 const { createClient } = require("redis");
+const logger = require("../middleware/logger");
 require("dotenv").config();
 
 const redisClient = createClient({
