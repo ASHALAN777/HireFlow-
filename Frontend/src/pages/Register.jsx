@@ -41,11 +41,11 @@ export default function Register() {
           <h1 className="text-xl font-medium text-gray-900 mb-1">
             Create account
           </h1>
-          <p className="text-xs text-gray-400 mb-6">Join HireFlow today</p>
+          <p className="text-xs text-gray-600 mb-6">Join HireFlow today</p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="text-xs text-gray-400 block mb-1">
+              <label className="text-xs text-gray-600 block mb-1">
                 Full name
               </label>
               <input
@@ -60,7 +60,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 block mb-1">Email</label>
+              <label className="text-xs text-gray-600 block mb-1">Email</label>
               <input
                 type="email"
                 name="email"
@@ -73,7 +73,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 block mb-1">
+              <label className="text-xs text-gray-600 block mb-1">
                 Password
               </label>
               <input
@@ -88,7 +88,7 @@ export default function Register() {
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 block mb-1">I am a</label>
+              <label className="text-xs text-gray-600 block mb-1">I am a</label>
               <select
                 name="role"
                 value={form.role}
@@ -110,7 +110,7 @@ export default function Register() {
               {loading ? "Creating account..." : "Create account"}
             </button>
 
-            <p className="text-xs text-gray-400 text-center">
+            <p className="text-xs text-gray-600 text-center">
               Already have an account?{" "}
               <Link to="/login" className="text-blue-500">
                 Sign in

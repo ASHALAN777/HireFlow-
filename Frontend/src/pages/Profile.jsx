@@ -14,7 +14,7 @@ const Field = ({
   userValue,
 }) => (
   <div className="flex justify-between items-center">
-    <p className="text-xs text-gray-400 w-32 shrink-0">{label}</p>
+    <p className="text-xs text-gray-600 w-32 shrink-0">{label}</p>
     {editing ? (
       <input
         name={name}
@@ -99,14 +99,12 @@ export default function Profile() {
     setResumeError("");
     setResumeSuccess("");
     try {
-    
       const formData = new FormData();
       formData.append("resume", resumeFile);
       const uploadRes = await API.post("/api/upload/resume", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-     
       const updateRes = await API.put("/api/auth/update-profile", {
         resumeUrl: uploadRes.data.resumeUrl,
       });
@@ -128,7 +126,7 @@ export default function Profile() {
       {/* Basic Info */}
       <div className="bg-white border border-gray-100 rounded-xl p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs text-gray-400">Basic Info</p>
+          <p className="text-xs text-gray-600">Basic Info</p>
           <button
             onClick={editing ? handleCancel : () => setEditing(true)}
             className="text-xs text-blue-500 hover:text-blue-600"
@@ -149,13 +147,13 @@ export default function Profile() {
           />
 
           <div className="flex justify-between items-center">
-            <p className="text-xs text-gray-400 w-32">Email</p>
-            <p className="text-xs text-gray-400">{user?.email}</p>
+            <p className="text-xs text-gray-600 w-32">Email</p>
+            <p className="text-xs text-gray-600">{user?.email}</p>
           </div>
 
           <div className="flex justify-between items-center">
-            <p className="text-xs text-gray-400 w-32">Role</p>
-            <p className="text-xs text-gray-400">{user?.role}</p>
+            <p className="text-xs text-gray-600 w-32">Role</p>
+            <p className="text-xs text-gray-600">{user?.role}</p>
           </div>
 
           <Field
@@ -182,7 +180,7 @@ export default function Profile() {
       {/* Candidate Fields */}
       {user?.role === "Candidate" && (
         <div className="bg-white border border-gray-100 rounded-xl p-6 mb-6">
-          <p className="text-xs text-gray-400 mb-4">Career Info</p>
+          <p className="text-xs text-gray-600 mb-4">Career Info</p>
           <div className="space-y-3">
             <Field
               label="Experience"
@@ -218,7 +216,7 @@ export default function Profile() {
       {/* Resume Upload — candidates only */}
       {user?.role === "Candidate" && (
         <div className="bg-white border border-gray-100 rounded-xl p-6 mb-6">
-          <p className="text-xs text-gray-400 mb-4">Resume</p>
+          <p className="text-xs text-gray-600 mb-4">Resume</p>
 
           {/* Current resume */}
           {user?.resumeUrl ? (
@@ -227,7 +225,7 @@ export default function Profile() {
                 <p className="text-xs text-gray-700 font-medium">
                   Current Resume
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">Uploaded ✓</p>
+                <p className="text-xs text-gray-600 mt-0.5">Uploaded ✓</p>
               </div>
               <a
                 href={`${import.meta.env.VITE_API_URL}${user.resumeUrl}`}
@@ -239,7 +237,7 @@ export default function Profile() {
               </a>
             </div>
           ) : (
-            <p className="text-xs text-gray-400 mb-4">No resume uploaded yet</p>
+            <p className="text-xs text-gray-600 mb-4">No resume uploaded yet</p>
           )}
 
           {/* Upload new resume */}
@@ -280,7 +278,7 @@ export default function Profile() {
       {/* Admin Fields */}
       {user?.role === "Admin" && (
         <div className="bg-white border border-gray-100 rounded-xl p-6 mb-6">
-          <p className="text-xs text-gray-400 mb-4">Company Info</p>
+          <p className="text-xs text-gray-600 mb-4">Company Info</p>
           <div className="space-y-3">
             <Field
               label="Company Name"
@@ -339,7 +337,7 @@ export default function Profile() {
 
       {/* Reset Password */}
       <div className="bg-white border border-gray-100 rounded-xl p-6">
-        <p className="text-xs text-gray-400 mb-4">Password</p>
+        <p className="text-xs text-gray-600 mb-4">Password</p>
         <Link
           to="/forgot-password"
           className="text-xs bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-700"

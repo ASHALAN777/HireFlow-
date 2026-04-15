@@ -24,11 +24,7 @@ export default function Sidebar() {
     <div className="fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-20">
       {/* Logo */}
       <div class="px-3 py-3 border-b flex justify-center border-gray-100">
-        <img
-          src="/Hireflow_logo.svg"
-          alt="Logo"
-          className="h-7 w-auto" 
-        />
+        <img src="/Hireflow_logo.svg" alt="Logo" className="h-7 w-auto" />
       </div>
 
       {/* Menu Items */}
@@ -37,7 +33,7 @@ export default function Sidebar() {
           <Link
             key={item.path}
             to={item.path}
-            className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition"
+            className="px-3 py-2 rounded-lg text-xs text-gray-600 hover:text-gray-600 hover:bg-gray-50 transition"
           >
             {item.label}
           </Link>
@@ -48,7 +44,7 @@ export default function Sidebar() {
       <div className="px-3 py-4 border-t border-gray-100">
         <Link
           to="/profile"
-          className="px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition block"
+          className="px-3 py-2 rounded-lg text-xs text-gray-600 hover:text-gray-600 hover:bg-gray-50 transition block"
         >
           Profile
         </Link>

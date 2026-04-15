@@ -102,14 +102,14 @@ export default function Apply() {
         <div className="flex items-center gap-4">
           <Link
             to={dashboardPath}
-            className="text-xs text-gray-400 hover:text-gray-600"
+            className="text-xs text-gray-600 hover:text-gray-600"
           >
             Dashboard
           </Link>
           <p className="text-xs text-gray-700 font-medium">{user.name}</p>
           <button
             onClick={handleLogout}
-            className="text-xs text-gray-400 hover:text-gray-600"
+            className="text-xs text-gray-600 hover:text-gray-600"
           >
             Logout
           </button>
@@ -128,13 +128,13 @@ export default function Apply() {
             <Player
               autoplay
               loop
-              src={applyAnimation} 
+              src={applyAnimation}
               style={{ height: "200px", width: "200px" }}
             />
             <p className="text-lg font-medium text-gray-900 mb-2">
               Application submitted!
             </p>
-            <p className="text-xs text-gray-400 mb-6">
+            <p className="text-xs text-gray-600 mb-6">
               Redirecting to dashboard in{" "}
               <span className="font-medium text-gray-700">{countdown}s</span>
             </p>
@@ -157,7 +157,7 @@ export default function Apply() {
       <div className="max-w-2xl mx-auto px-4 py-12">
         <Link
           to={`/jobs/${jobId}`}
-          className="text-xs text-gray-400 hover:text-gray-600 mb-6 inline-block"
+          className="text-xs text-gray-600 hover:text-gray-600 mb-6 inline-block"
         >
           ← Back to job
         </Link>
@@ -167,7 +167,7 @@ export default function Apply() {
             <h1 className="text-2xl font-medium text-gray-900 mb-1">
               Apply for {job.title}
             </h1>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-600">
               {job.postedBy?.name} · {job.location} · {job.salary}
             </p>
           </div>
@@ -178,7 +178,7 @@ export default function Apply() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Resume */}
           <div>
-            <p className="text-xs text-gray-400 mb-3">Resume</p>
+            <p className="text-xs text-gray-600 mb-3">Resume</p>
 
             {user?.resumeUrl && (
               <div className="flex gap-2 mb-4">
@@ -193,7 +193,7 @@ export default function Apply() {
                     className={`text-xs px-4 py-2 rounded-lg border transition ${
                       useProfileResume === val
                         ? "bg-gray-900 text-white border-gray-900"
-                        : "border-gray-200 text-gray-400 hover:bg-gray-50"
+                        : "border-gray-200 text-gray-600 hover:bg-gray-50"
                     }`}
                   >
                     {label}
@@ -247,7 +247,7 @@ export default function Apply() {
             )}
 
             {!user?.resumeUrl && (
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-gray-600 mt-2">
                 💡 Upload your resume on your{" "}
                 <Link
                   to="/profile"
@@ -262,7 +262,7 @@ export default function Apply() {
 
           {/* Cover Letter */}
           <div>
-            <p className="text-xs text-gray-400 mb-2">
+            <p className="text-xs text-gray-600 mb-2">
               Cover letter (optional)
             </p>
             <textarea

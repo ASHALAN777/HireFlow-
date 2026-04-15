@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/components/Global/AuthProvider";
 import LoginAnimation from "@/assets/Login.json";
 
-import { Player } from "@lottiefiles/react-lottie-player"
+import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -46,13 +46,13 @@ export default function Login() {
           <h1 className="text-xl font-medium text-gray-900 mb-1">
             Welcome back
           </h1>
-          <p className="text-xs text-gray-400 mb-6">
+          <p className="text-xs text-gray-600 mb-6">
             Sign in to your HireFlow account
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="text-xs text-gray-400 block mb-1">Email</label>
+              <label className="text-xs text-gray-600 block mb-1">Email</label>
               <Input
                 type="email"
                 name="email"
@@ -64,7 +64,7 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="text-xs text-gray-400 block mb-1">
+              <label className="text-xs text-gray-600 block mb-1">
                 Password
               </label>
               <Input
@@ -93,7 +93,7 @@ export default function Login() {
               {loading ? "Signing in..." : "Sign in"}
             </Button>
 
-            <p className="text-xs text-gray-400 text-center">
+            <p className="text-xs text-gray-600 text-center">
               Don't have an account?{" "}
               <Link to="/register" className="text-blue-500">
                 Register
@@ -104,14 +104,12 @@ export default function Login() {
 
         {/* Right — Lottie */}
         <div className="flex-1 bg-gray-50 border-l border-gray-100 flex flex-col items-center justify-center gap-2">
-        
           <Player
             autoplay
             loop
             src={LoginAnimation}
             style={{ height: "200px", width: "200px" }}
           />
-        
         </div>
       </div>
     </div>

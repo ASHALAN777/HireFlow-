@@ -33,14 +33,14 @@ export default function JobDetail() {
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xs text-gray-400">Loading...</p>
+        <p className="text-xs text-gray-600">Loading...</p>
       </div>
     );
 
   if (!job)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xs text-gray-400">Job not found</p>
+        <p className="text-xs text-gray-600">Job not found</p>
       </div>
     );
 
@@ -48,30 +48,26 @@ export default function JobDetail() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-       <img
-          src="/Hireflow_logo.svg"
-          alt="Logo"
-          className="h-7 w-auto" 
-        />
+        <img src="/Hireflow_logo.svg" alt="Logo" className="h-7 w-auto" />
 
         {user ? (
           <div className="flex items-center gap-4">
             <Link
               to="/jobs"
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-600 hover:text-gray-600"
             >
               Browse Jobs
             </Link>
             <Link
               to={dashboardPath}
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-600 hover:text-gray-600"
             >
               Dashboard
             </Link>
             <p className="text-xs text-gray-700 font-medium">{user.name}</p>
             <button
               onClick={handleLogout}
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-600 hover:text-gray-600"
             >
               Logout
             </button>
@@ -79,7 +75,7 @@ export default function JobDetail() {
         ) : (
           <div className="flex items-center gap-3">
             <Link to="/jobs">
-              <Button variant="ghost" className="text-xs text-gray-400">
+              <Button variant="ghost" className="text-xs text-gray-600">
                 Browse Jobs
               </Button>
             </Link>
@@ -95,7 +91,7 @@ export default function JobDetail() {
       <div className="max-w-3xl mx-auto px-4 py-12">
         <Link
           to="/jobs"
-          className="text-xs text-gray-400 hover:text-gray-600 mb-6 inline-block"
+          className="text-xs text-gray-600 hover:text-gray-600 mb-6 inline-block"
         >
           ← Back to jobs
         </Link>
@@ -107,7 +103,7 @@ export default function JobDetail() {
               {job.jobType}
             </Badge>
           </div>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-600">
             {job.postedBy?.name} · {job.location} · {job.salary}
           </p>
         </div>
@@ -115,7 +111,7 @@ export default function JobDetail() {
         <div className="border-t border-gray-100 mb-8" />
 
         <div className="mb-8">
-          <p className="text-xs text-gray-400 mb-3">Skills required</p>
+          <p className="text-xs text-gray-600 mb-3">Skills required</p>
           <div className="flex gap-2 flex-wrap">
             {job.skills.map((skill, i) => (
               <Badge key={i} variant="outline" className="text-xs font-normal">
@@ -126,7 +122,7 @@ export default function JobDetail() {
         </div>
 
         <div className="mb-10">
-          <p className="text-xs text-gray-400 mb-3">About this role</p>
+          <p className="text-xs text-gray-600 mb-3">About this role</p>
           <p className="text-sm text-gray-600 leading-relaxed">
             {job.description}
           </p>
@@ -144,7 +140,7 @@ export default function JobDetail() {
 
         {/* Admin — no apply */}
         {user?.role === "Admin" && (
-          <p className="text-xs text-gray-400">You are viewing as admin</p>
+          <p className="text-xs text-gray-600">You are viewing as admin</p>
         )}
 
         {/* Not logged in */}
@@ -156,7 +152,7 @@ export default function JobDetail() {
             >
               Sign up to apply
             </Button>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-600">
               Already have an account?{" "}
               <Link to="/login" className="text-blue-500">
                 Sign in

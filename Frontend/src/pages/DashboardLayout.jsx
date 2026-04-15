@@ -40,12 +40,12 @@ function NavbarRight() {
 
   return (
     <div className="flex items-center gap-4">
-      <p className="text-xs text-gray-400">
+      <p className="text-xs text-gray-600">
         Hi, <span className="text-gray-700 font-medium">{user?.name}</span> 👋
       </p>
       <button
         onClick={handleLogout}
-        className="text-xs text-gray-400 hover:text-gray-600"
+        className="text-xs text-gray-600 hover:text-gray-600"
       >
         Logout
       </button>

@@ -44,25 +44,21 @@ export default function JobListings() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-        <img
-          src="/Hireflow_logo.svg"
-          alt="Logo"
-          className="h-7 w-auto" 
-        />
+        <img src="/Hireflow_logo.svg" alt="Logo" className="h-7 w-auto" />
 
         {user ? (
           // logged in navbar
           <div className="flex items-center gap-4">
             <Link
               to={dashboardPath}
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-600 hover:text-gray-600"
             >
               Dashboard
             </Link>
             <p className="text-xs text-gray-700 font-medium">{user.name}</p>
             <button
               onClick={handleLogout}
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-600 hover:text-gray-600"
             >
               Logout
             </button>
@@ -90,7 +86,7 @@ export default function JobListings() {
           <h1 className="text-2xl font-medium text-gray-900 mb-1">
             Browse Jobs
           </h1>
-          <p className="text-xs text-gray-400">Find your next opportunity</p>
+          <p className="text-xs text-gray-600">Find your next opportunity</p>
         </div>
 
         {/* Search + Filter */}
@@ -117,11 +113,11 @@ export default function JobListings() {
 
         {/* Job List */}
         {loading ? (
-          <p className="text-xs text-gray-400 text-center py-12">
+          <p className="text-xs text-gray-600 text-center py-12">
             Loading jobs...
           </p>
         ) : filtered.length === 0 ? (
-          <p className="text-xs text-gray-400 text-center py-12">
+          <p className="text-xs text-gray-600 text-center py-12">
             No jobs found
           </p>
         ) : (
@@ -140,7 +136,7 @@ export default function JobListings() {
                       {job.jobType}
                     </Badge>
                   </div>
-                  <p className="text-xs text-gray-400 mb-2">
+                  <p className="text-xs text-gray-600 mb-2">
                     {job.postedBy?.name} · {job.location} · {job.salary}
                   </p>
                   <div className="flex gap-2 flex-wrap">

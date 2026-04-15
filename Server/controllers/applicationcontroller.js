@@ -35,7 +35,11 @@ const applyJob = async (req, res) => {
 
     res.status(201).json(application);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Error in applyJob: ${error.message}`)
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal Server Error" 
+    });
   }
 };
 
@@ -50,7 +54,11 @@ const getAllApplications = async (req, res) => {
       .sort({ createdAt: -1 });
     res.status(200).json(applications);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Error in getAllApplications: ${error.message}`)
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal Server Error" 
+    });
   }
 };
 
@@ -66,7 +74,11 @@ const getApplicationById = async (req, res) => {
 
     res.status(200).json(application);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Error in getApplicationById: ${error.message}`);
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal Server Error" 
+    });
   }
 };
 
@@ -80,7 +92,11 @@ const getMyApplications = async (req, res) => {
     logger.info("APPLICATIONS FOUND:", applications.length);
     res.status(200).json(applications);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Error in getMyApplications: ${error.message}`);
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal Server Error" 
+    });
   }
 };
 
@@ -97,7 +113,11 @@ const updateStatus = async (req, res) => {
       return res.status(404).json({ message: "Application not found" });
     res.status(200).json(application);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    logger.error(`Error in updateStatus: ${error.message}`);
+    res.status(500).json({ 
+      success: false, 
+      message: "Internal Server Error" 
+    });
   }
 };
 
