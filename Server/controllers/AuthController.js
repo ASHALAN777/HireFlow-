@@ -2,6 +2,7 @@ const UserModel = require("../Models/user-schema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const redisClient = require("../middleware/redis");
 const sgMail = require("@sendgrid/mail");
 const logger = require("../middleware/logger");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -60,14 +61,23 @@ const Signupcontrol = async (req, res) => {
 const Logincontrol = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email.toLowerCase() });
 
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Email not found", success: false });
+    const cacheKey = `hash:${email.toLowerCase()}`;
+
+    let user = await redisClient.get(cacheKey); // remove
+
+    if (user) {
+      user = JSON.parse(user);
+      logger.info("User hash found in Redis");
+    } else {
+      user = await UserModel.findOne({ email: email.toLowerCase() });
+
+      if (!user) {
+        return res
+          .status(401)
+          .json({ message: "Email not found", success: false });
+      }
     }
-
     const isPassEqual = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
       return res
@@ -99,6 +109,24 @@ const Logincontrol = async (req, res) => {
       sameSite: "none",
       maxAge: 15 * 24 * 60 * 60 * 1000,
     });
+
+    const userSession = {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+      name: user.name,
+    };
+
+    try {
+      await redisClient.setEx(
+        `session:${user._id}`,
+        3600,
+        JSON.stringify(userSession),
+      );
+      logger.info(` Session cached in Redis for user: ${user.email}`);
+    } catch (redisErr) {
+      logger.error("Redis Cache Error:", redisErr.message);
+    }
 
     res.status(200).json({
       message: "Login successful",

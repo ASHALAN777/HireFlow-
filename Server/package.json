@@ -16,6 +16,8 @@
     "@logtail/node": "^0.5.8",
     "@logtail/winston": "^0.5.8",
     "@sendgrid/mail": "^8.1.6",
+    "@upstash/redis": "^1.37.0",
+    "autocannon": "^8.0.0",
     "axios": "^1.13.6",
     "bcrypt": "^6.0.0",
     "body": "^5.1.0",
@@ -37,6 +39,7 @@
     "parser": "^0.1.4",
     "pdf-parse": "^2.4.5",
     "pdf-to-text": "^0.0.7",
+    "redis": "^5.12.1",
     "text-from-pdf": "^1.1.2",
     "winston": "^3.19.0",
     "xss": "^1.0.15"

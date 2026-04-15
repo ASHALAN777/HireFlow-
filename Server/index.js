@@ -5,6 +5,7 @@ const rateLimit = require("express-rate-limit");
 const path = require("path");
 require("dotenv").config();
 require("./Models/db");
+require("./middleware/redis");
 
 const mongoSanitize = require("./middleware/Sanitize");
 const apiRoutes = require("./Routes/apiroutes");
@@ -26,9 +27,10 @@ const frontendURL = process.env.frontend_url || "http://localhost:5173";
 
 const myStream = {
   write: (text) => {
-    logger.info(text.trim());
+    consoleinfo(text.trim());
   },
 };
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 } else {
@@ -38,6 +40,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(
   cors({
     origin: "*",
+
     credentials: true,
   }),
 );
@@ -73,5 +76,5 @@ app.use("/api", apiRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is booting up on port ${PORT}`);
+  logger.info(`Server is booting up on port ${PORT}`);
 });

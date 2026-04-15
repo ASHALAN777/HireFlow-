@@ -3,3 +3,5 @@ venv/
 env/
 Server/.env
 __pycache__/
+loadtest.js
+Cluster.js

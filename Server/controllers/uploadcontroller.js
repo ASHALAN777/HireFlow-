@@ -12,7 +12,10 @@ const uploadResume = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-   const userName = (req.user && req.user.name) ? req.user.name.replace(/\s+/g, "_") : "user_" + Date.now();
+    const userName =
+      req.user && req.user.name
+        ? req.user.name.replace(/\s+/g, "_")
+        : "user_" + Date.now();
     const customFileName = `resume_${userName}_${Date.now()}.pdf`;
     const fileBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
 
@@ -27,7 +30,7 @@ const uploadResume = async (req, res) => {
       resumeUrl: result.secure_url,
     });
   } catch (error) {
-    console.error("Cloudinary Error:", error);
+    logger.error("Cloudinary Error:", error);
     res.status(500).json({ message: "Cloudinary upload failed" });
   }
 };

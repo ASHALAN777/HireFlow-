@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
+const redisClient = require("./redis");
+// const { redisClient } = require("@upstash/redis");
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.access_token;
 
@@ -9,6 +11,21 @@ const authMiddleware = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET_KEY);
+
+    ////                  NEW REDIS PART  start       //////
+
+    try {
+      const cachedUser = await redisClient.get(`session:${decoded._id}`);
+
+      if (cachedUser) {
+        req.user = JSON.parse(cachedUser);
+        return next();
+      }
+    } catch (redisError) {
+      logger.error("Redis Middleware Error:", redisError.message);
+    }
+
+    //                  NEW REDIS PART  END       //////
 
     req.user = {
       _id: decoded._id,

@@ -14,12 +14,10 @@ const applyJob = async (req, res) => {
   try {
     const { jobId, coverLetter, resumeUrl } = req.body;
 
-  
     const job = await Job.findById(jobId);
 
     if (!job) return res.status(404).json({ message: "Job not found" });
 
-    
     const alreadyApplied = await Application.findOne({
       job: jobId,
       candidate: req.user._id,
@@ -78,7 +76,7 @@ const getMyApplications = async (req, res) => {
     const applications = await Application.find({ candidate: userId })
       .populate("job", "title location salary jobType")
       .sort({ createdAt: -1 });
-    console.log("APPLICATIONS FOUND:", applications.length);
+    logger.info("APPLICATIONS FOUND:", applications.length);
     res.status(200).json(applications);
   } catch (error) {
     res.status(500).json({ message: "Server error" });

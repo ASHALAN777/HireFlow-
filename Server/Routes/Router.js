@@ -12,6 +12,7 @@ const {
 } = require("../controllers/AuthController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const authchecker = require("../controllers/authchecker");
 const refresher = require("../middleware/refreshMiddleware");
 const {
   forgotpassword,
@@ -42,19 +43,7 @@ router.post("/logout", (req, res) => {
 });
 
 // get current user
-router.get("/me", authMiddleware, async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id).select(
-      "-password -resetOTP -resetOTPExpiry -__v -resumeUrl -profileImage",
-    );
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json({ authenticated: true, user });
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
+router.get("/me", authMiddleware, authchecker);
 
 // update current  user
 router.put(
