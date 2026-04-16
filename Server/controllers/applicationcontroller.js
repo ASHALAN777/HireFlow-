@@ -11,23 +11,26 @@ cloudinary.config({
 });
 
 // post apply for a job — candidate only
+
 const applyJob = async (req, res) => {
   try {
     const { jobId, coverLetter, resumeUrl } = req.body;
 
-    const job = await Job.findById(jobId);
+    const cleanJobId = String(jobId);
+
+    const job = await Job.findById(cleanJobId);
 
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     const alreadyApplied = await Application.findOne({
-      job: jobId,
+      job: cleanJobId,
       candidate: req.user._id,
     });
     if (alreadyApplied)
       return res.status(400).json({ message: "Already applied for this job" });
 
     const application = await Application.create({
-      job: jobId,
+      job: cleanJobId,
       candidate: req.user._id,
       resumeUrl: resumeUrl,
       coverLetter,
