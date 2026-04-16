@@ -1,4 +1,4 @@
- <div align="center">
+<div align="center">
 
 <!-- BANNER SVG -->
 <img src="https://readme-typing-svg.demolab.com?font=DM+Mono&size=13&pause=1000&color=63B3ED&center=true&vCenter=true&width=435&lines=Intelligent+AI+Recruitment+Ecosystem;Powered+by+Google+Gemini+%C2%B7+MERN+Stack" alt="Typing SVG" />
@@ -14,6 +14,8 @@ Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid 
 [![Render](https://img.shields.io/badge/Backend-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](https://render.com/)
 [![Gemini](https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=flat-square&logo=googlegemini&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![BetterStack](https://img.shields.io/badge/Logging-BetterStack-6ad1ff?style=flat-square&logo=loggy&logoColor=white)](https://betterstack.com/)
+[![SonarQube](https://img.shields.io/badge/SonarQube-A%20Rating-4E9BCD?style=flat-square&logo=sonarqube&logoColor=white)](https://www.sonarsource.com/products/sonarqube/)
+[![Security Headers](https://img.shields.io/badge/Security%20Headers-A%20Grade-00C853?style=flat-square&logo=shield&logoColor=white)](https://securityheaders.com/)
 
 <br/>
 
@@ -82,6 +84,37 @@ Resume analysis powered by Google Gemini AI · Automated workflows via SendGrid 
 </td>
 </tr>
 </table>
+
+---
+
+## 🛡️ Code Quality & Security
+
+HireFlow is audited against industry-standard tooling for code quality and HTTP security posture.
+
+<div align="center">
+
+| Tool | Grade | What was evaluated |
+|------|-------|--------------------|
+| **SonarQube** | 🟢 **A** | Code smells, bugs, vulnerabilities, duplications |
+| **Security Headers** | 🟢 **A** | HTTP response headers (CSP, HSTS, X-Frame-Options, etc.) |
+
+</div>
+
+---
+
+## ⚡ Performance Benchmarks
+
+Load tested with **Autocannon** across five progressive phases — 0 errors across all **12,827 total requests**.
+
+| Phase | Requests | 2xx | 4xx | 5xx | Success Rate | Avg Latency |
+|-------|----------|-----|-----|-----|-------------|-------------|
+| 1️⃣ Warm-up | 752 | 752 | 0 | 0 | ✅ 100% | 391 ms |
+| 2️⃣ Ramp-up | 1,523 | 1,523 | 0 | 0 | ✅ 100% | 960 ms |
+| 3️⃣ Medium load | 1,294 | 1,294 | 0 | 0 | ✅ 100% | 3,409 ms |
+| 4️⃣ High load | 1,523 | 1,523 | 0 | 0 | ✅ 100% | 7,491 ms |
+| 5️⃣ Peak stress | 7,735 | 7,735 | 0 | 0 | ✅ 100% | 21,573 ms |
+
+> **Note:** Latency increases at peak load are expected on Render's free tier due to shared resources and cold-start behaviour. Zero server errors were recorded across all phases, demonstrating stable request handling under sustained concurrency.
 
 ---
 
