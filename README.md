@@ -1,10 +1,3 @@
-Here is the complete, high-impact README.md for your GitHub. It is professionally formatted and includes your 2.2 Million, 647k, and 15k performance benchmarks to prove your engineering skills.
-
-code
-Markdown
-download
-content_copy
-expand_less
 <div align="center">
 
 <!-- BANNER SVG -->
@@ -120,43 +113,6 @@ HireFlow is architected to handle extreme concurrency. Through **Node.js Cluster
 
 ---
 
-## 🛠️ Tech Stack
-
-<details open>
-<summary><strong>Frontend</strong></summary>
-<br/>
-
-![React](https://img.shields.io/badge/React.js_(Vite)-20232A?style=flat-square&logo=react&logoColor=61DAFB)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white)
-![Lottie](https://img.shields.io/badge/Lottie_Animations-00DDB3?style=flat-square)
-
-</details>
-
-<details open>
-<summary><strong>Backend & Cache</strong></summary>
-<br/>
-
-![Node](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-FF4438?style=flat-square&logo=redis&logoColor=white)
-![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=flat-square&logo=mongodb&logoColor=white)
-
-</details>
-
-<details open>
-<summary><strong>Persistence & Infrastructure</strong></summary>
-<br/>
-
-![MongoDB](https://img.shields.io/badge/MongoDB_Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=flat-square&logo=cloudinary&logoColor=white)
-![BetterStack](https://img.shields.io/badge/BetterStack_Logs-6ad1ff?style=flat-square)
-![SendGrid](https://img.shields.io/badge/SendGrid-1A82E2?style=flat-square&logo=twilio&logoColor=white)
-
-</details>
-
----
-
 ## 🌎 System Architecture
 
 ```mermaid
@@ -169,12 +125,32 @@ graph LR
     end
     Server --> AI[Google Gemini API]
     Server --> Email[SendGrid API]
+🛠️ Tech Stack
+<details open>
+<summary><strong>Frontend</strong></summary>
+<br/>
+![alt text](https://img.shields.io/badge/React.js_(Vite)-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+
+![alt text](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+
+![alt text](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white)
+
+![alt text](https://img.shields.io/badge/Lottie_Animations-00DDB3?style=flat-square)
+</details>
+<details open>
+<summary><strong>Backend & Cache</strong></summary>
+<br/>
+![alt text](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+
+![alt text](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
+
+![alt text](https://img.shields.io/badge/Redis-FF4438?style=flat-square&logo=redis&logoColor=white)
+
+![alt text](https://img.shields.io/badge/Mongoose-880000?style=flat-square&logo=mongodb&logoColor=white)
+</details>
 🚀 Installation
 code
 Bash
-download
-content_copy
-expand_less
 # Clone the repository
 git clone https://github.com/ASHALAN777/HireFlow-.git
 
@@ -182,29 +158,18 @@ git clone https://github.com/ASHALAN777/HireFlow-.git
 cd Server && npm install
 node index.js
 
-# Setup Frontend
+# Setup Frontend (In a new terminal)
 cd Frontend && npm install
 npm run dev
 👤 Author
 <div align="center">
-
 <img src="https://github.com/ASHALAN777.png" width="80" style="border-radius:50%" />
-
-
 Alan Ricky Martin
 Full Stack Developer & Performance Engineer
-
 ![alt text](https://img.shields.io/badge/GitHub-ASHALAN777-181717?style=flat-square&logo=github)
 
-
 ![alt text](https://img.shields.io/badge/LinkedIn-Alan_Martin-0077B5?style=flat-square&logo=linkedin)
-
 </div>
-
 <div align="center">
-
-
 Made with ☕ by Alan · MIT License
-
 </div>
-```
