@@ -58,31 +58,62 @@ const Signupcontrol = async (req, res) => {
   }
 };
 
+
 const Logincontrol = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = email.toLowerCase();
+    const sessionCacheKey = `loginsession:${normalizedEmail}`;
 
-    const cacheKey = `hash:${email.toLowerCase()}`;
+    const cachedSession = await redisClient.get(sessionCacheKey);
 
-    let user = await redisClient.get(cacheKey); // remove
+    if (cachedSession) {
+      const session = JSON.parse(cachedSession);
+      logger.info("Login served from Redis — bcrypt skipped");
 
-    if (user) {
-      user = JSON.parse(user);
-      logger.info("User hash found in Redis");
-    } else {
-      user = await UserModel.findOne({ email: email.toLowerCase() });
+     // use session.* not user.*
+      const access_token = jwt.sign(
+        { _id: session._id, email: session.email, role: session.role },
+        process.env.ACCESS_SECRET_KEY,
+        { expiresIn: "20m" },
+      );
+      const refresh_token = jwt.sign(
+        { _id: session._id },
+        process.env.REFRESH_SECRET_KEY,
+        { expiresIn: "15d" },
+      );
 
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: "Email not found", success: false });
-      }
+      res.cookie("access_token", access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        maxAge: 20 * 60 * 1000,
+      });
+      res.cookie("refresh_token", refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+      });
+
+      return res.status(200).json({
+        message: "Login successful",
+        success: true,
+        role: session.role,
+        email: session.email,
+        name: session.name,
+      });
     }
+
+    // DB + bcrypt
+    const user = await UserModel.findOne({ email: normalizedEmail });
+    if (!user) {
+      return res.status(401).json({ message: "Email not found", success: false });
+    }
+
     const isPassEqual = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
-      return res
-        .status(401)
-        .json({ message: "Wrong password", success: false });
+      return res.status(401).json({ message: "Wrong password", success: false });
     }
 
     const access_token = jwt.sign(
@@ -102,7 +133,6 @@ const Logincontrol = async (req, res) => {
       sameSite: "none",
       maxAge: 20 * 60 * 1000,
     });
-
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -118,29 +148,25 @@ const Logincontrol = async (req, res) => {
     };
 
     try {
-      await redisClient.setEx(
-        `session:${user._id}`,
-        3600,
-        JSON.stringify(userSession),
-      );
-      logger.info(` Session cached in Redis for user: ${user.email}`);
+      //  cache loginsession so next login skips bcrypt
+      await redisClient.setEx(sessionCacheKey, 300, JSON.stringify(userSession));
+      await redisClient.setEx(`session:${user._id}`, 3600, JSON.stringify(userSession));
+      logger.info(`Session cached in Redis for user: ${user.email}`);
     } catch (redisErr) {
       logger.error("Redis Cache Error:", redisErr.message);
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful",
       success: true,
       role: user.role,
       email: user.email,
       name: user.name,
     });
+
   } catch (error) {
     logger.error("Login error:", error.message);
-    return res.status(500).json({
-      message: "Login failed",
-      success: false,
-    });
+    return res.status(500).json({ message: "Login failed", success: false });
   }
 };
 
